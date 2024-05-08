@@ -225,4 +225,8 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
+#prometheus
+**/prometheus_data/*
+**/prometheus_data/**
+
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,intellij+all,java,maven,gradle
