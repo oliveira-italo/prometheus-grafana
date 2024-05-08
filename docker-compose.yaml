@@ -38,6 +38,10 @@ services:
       - database
     depends_on:
       - redis-forum-api
+    ulimits:
+      nofile:
+        soft: 1048576
+        hard: 1048576
 
   app-forum-api:
     build:
@@ -57,7 +61,11 @@ services:
       interval: 1s
       timeout: 30s
       retries: 60
-
+    ulimits:
+      nofile:
+        soft: 1048576
+        hard: 1048576
+  
   proxy-forum-api:
     image: nginx
     container_name: proxy-forum-api
@@ -90,3 +98,19 @@ services:
       - 9090:9090
     networks:
       - monit
+      - api
+    depends_on:
+      - proxy-forum-api
+    user: root
+
+#  client-forum-api:
+#    build:
+#      context: ./client/
+#      dockerfile: Dockerfile
+#    image: client-forum-api
+#    container_name: client-forum-api
+#    restart: unless-stopped
+#    networks:
+#      - proxy
+#    depends_on:
+#      - proxy-forum-api
