@@ -103,6 +103,20 @@ services:
       - proxy-forum-api
     user: root
 
+  grafana-forum-api:
+    image: grafana/grafana
+    container_name: grafana-forum-api
+    volumes:
+      - ./grafana:/var/lib/grafana
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    networks:
+      - monit
+    depends_on:
+      - prometheus-forum-api
+    user: root
+
   client-forum-api:
     build:
       context: ./client/
@@ -113,4 +127,4 @@ services:
     networks:
       - proxy
     depends_on:
-      - prometheus-forum-api
+      - grafana-forum-api
